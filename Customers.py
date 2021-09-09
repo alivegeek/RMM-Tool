@@ -17,9 +17,9 @@ class Customer():
 
         self._name = name
         self._wanIP = wanIP
-        lastReport = ""
-        state = ""
-
+        _lastReport = None
+        _state = None
+        _touched = False
     def name(self):
         return self._name
 
@@ -27,10 +27,17 @@ class Customer():
         return self._wanIP
 
     def lastReport(self):
-            return self._lastReport
+        return self._lastReport
+
+    def setLastReport(self, time):
+        _lastReport = time
 
     def state(self):
         return self._state
+
+    def setState(self, state):
+        _state = state
+        return
 
     def add(self, name, wanIP):
         self.data.extend((name, wanIP))
