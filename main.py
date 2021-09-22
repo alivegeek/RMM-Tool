@@ -9,11 +9,12 @@ now = datetime.now()
 # dd/mm/YY H:M:S
 dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
-#vars
+# vars
 pingsBeforeDown = 10
 masterWanList = load()
 wanIsDownMessage = ""
 teams = Report.SendToTeams.send
+
 
 def testCSV():
     for each in masterWanList:
@@ -26,19 +27,19 @@ def healthCheck(host):
         for x in range(pingsBeforeDown):
             print("Retry.." + str(x + 1) + " of " + str(pingsBeforeDown))
             if Ping.ping(str(host.wanIP())) is True:
-                host.lastReport(now)
+                host.setLastReport(now)
+                host.settouched()
                 return
             elif x >= pingsBeforeDown - 1:
                 host.setState("Down")
                 host.setLastReport(now)
-                teams(str(host.name()) + "is down at " + str(dt_string))
+                if host.touched():
+                    teams(str(host.name()) + "is down at " + str(dt_string))
+
 
 if __name__ == "__main__":
-    #initFromCSV()
+    # initFromCSV()
 
     while True:
         for each in masterWanList:
             healthCheck(each)
-
-
-

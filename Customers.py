@@ -17,9 +17,10 @@ class Customer():
 
         self._name = name
         self._wanIP = wanIP
-        _lastReport = None
-        _state = None
-        _touched = False
+        self._lastReport = None
+        self._state = None
+        self._touched = False
+
     def name(self):
         return self._name
 
@@ -41,4 +42,11 @@ class Customer():
 
     def add(self, name, wanIP):
         self.data.extend((name, wanIP))
+        return
+
+    def touched(self):
+        return self._touched
+
+    def settouched(self):
+        self._touched = True
 
