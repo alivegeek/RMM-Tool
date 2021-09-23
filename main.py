@@ -2,13 +2,13 @@ import Report
 from Load import load
 import Customers
 import Ping
-from datetime import datetime
-
+from datetime import datetime, timedelta
+import Websites
 # datetime object containing current date and time
 now = datetime.now()
 # dd/mm/YY H:M:S
 dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-
+lastUrlCheck = datetime.now()
 # vars
 pingsBeforeDown = 10
 masterWanList = load()
@@ -43,3 +43,11 @@ if __name__ == "__main__":
     while True:
         for each in masterWanList:
             healthCheck(each)
+        if now > (lastUrlCheck - timedelta(seconds=20 )):
+            for each in Websites.listOfURLs:
+                url = "https://" + str(each).strip("[]'")
+                print(url)
+                if Websites.checkWebsite(url) is False:
+                    teams(str(url) + " may be down")
+
+

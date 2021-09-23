@@ -3,18 +3,21 @@ import requests
 from Load import loadWebsites
 listOfURLs = loadWebsites()
 
-def checkWebsite():
-    for i in listOfURLs:
-       # print(str(i).strip("[]'")  )  #
-        try:
-            r = requests.get("https://" + str(i).strip("[]'"))
-            if r.status_code == 200:
-                pass
-            else:
-                print(r + " may be down")
+def checkWebsite(url):
+    # for i in listOfURLs:
+    #    # print(str(i).strip("[]'")  )  #
+    try:
+        r = requests.get(url)
 
-        except:
-            print(str(i) + " is down")
+  #  r = requests.get("https://" + str(i).strip("[]'"))
+        if r.status_code == 200:
+            return True
+        else:
+            return False
+
+    except:
+        return False
+        #print(url + " is down")
         #print(listOfURLs[])
 
 if __name__ == "__main__":
