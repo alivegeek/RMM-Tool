@@ -1,3 +1,5 @@
+import time
+
 import Report
 from Load import load
 import Customers
@@ -39,15 +41,19 @@ def healthCheck(host):
 
 if __name__ == "__main__":
     # initFromCSV()
+    # result = datetime.now() - timedelta(days = 730)
+    # print(result)
 
     while True:
+
         for each in masterWanList:
             healthCheck(each)
-        if now > (lastUrlCheck - timedelta(seconds=20 )):
+
+        if lastUrlCheck + timedelta(days=1) <= datetime.now():
             for each in Websites.listOfURLs:
                 url = "https://" + str(each).strip("[]'")
                 print(url)
                 if Websites.checkWebsite(url) is False:
                     teams(str(url) + " may be down")
-
+            lastUrlCheck = datetime.now()
 
